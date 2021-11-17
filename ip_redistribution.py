@@ -52,22 +52,27 @@ def read_txt_ip():
 
 
 # WRITE NEW TEXT FILE (text_ip_output.txt)
-with open(strPath + "/text_ip_output.txt", "w") as f:
-    f.write("config firewall address")
-    datacenter = 1
-    count = 0
-    for i in ip_read:
-        count += 1
-        f.write(f'''
-        edit group.{ip_read.index(i) + 1}
-        set subnet {i}/32
-        end
-        config firewall addrgrp
-        edit datacenter.{datacenter}
-        append member group.{ip_read.index(i) + 1}
-        end''')
-        if count > 299:
-            datacenter += 1
+def write_txt_ip(ip_read):
+    if os.path.exists(strPath + "/text_ip_output.txt"):
+        with open(strPath + "/text_ip_output.txt", "w") as f:
+            f.write("config firewall address")
+            datacenter = 1
             count = 0
+            for i in ip_read:
+                count += 1
+                f.write(f'''
+                edit group.{ip_read.index(i) + 1}
+                set subnet {i}/32
+                end
+                config firewall addrgrp
+                edit datacenter.{datacenter}
+                append member group.{ip_read.index(i) + 1}
+                end''')
+                if count > 299:
+                    datacenter += 1
+                    count = 0
+    else:
+        pass
+
 
 print("Process finished successfully")
