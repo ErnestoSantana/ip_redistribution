@@ -36,12 +36,20 @@ def generate_txt_ip(len_ip):
 
 
 generate_txt_ip(input_len_ip)
+
+
 ######################################################
 
 # READ TEXT FILE (text_ip_input.txt)
-with open(strPath + "/text_ip_input.txt") as f:
-    a = f.read()
-    ip_read = a.strip().split('\n')
+def read_txt_ip():
+    if os.path.exists(strPath + "/text_ip_input.txt"):
+        with open(strPath + "/text_ip_input.txt") as f:
+            a = f.read()
+            ip_read = a.strip().split('\n')
+            return ip_read
+    else:
+        pass
+
 
 # WRITE NEW TEXT FILE (text_ip_output.txt)
 with open(strPath + "/text_ip_output.txt", "w") as f:
