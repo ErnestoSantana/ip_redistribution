@@ -1,5 +1,6 @@
 import os.path
 import random
+from netmiko import ConnectHandler
 
 strPath = os.path.dirname(__file__)
 
@@ -12,7 +13,7 @@ def random_value():
 ######################################################
 # (Optional) Generate IPs file to read
 ######################################################
-input_len_ip = input("Enter number of IP addresses: ")
+# input_len_ip = input("Enter number of IP addresses: ")
 
 
 def generate_txt_ip(len_ip):
@@ -33,9 +34,6 @@ def generate_txt_ip(len_ip):
     with open(strPath + "/text_ip_input.txt", "w") as f:
         for ips in ip_list:
             f.write(ips + '\n')
-
-
-generate_txt_ip(input_len_ip)
 
 
 ######################################################
@@ -75,4 +73,19 @@ def write_txt_ip(ip_read):
         pass
 
 
-print("Process finished successfully")
+# print("Process finished successfully")
+
+######################################################
+# Connect to Router Cisco using Netmiko
+######################################################
+
+device_typ = input('Device type <default [cisco_io]>: ')
+cisco = {
+    'device_type': device_typ if device_typ != '' else 'cisco_io',
+    'host': input('Host IP: '),
+    'username': input('Username: '),
+    'password': input('Password: '),
+}
+
+device = ConnectHandler(**cisco)
+output = device.send_command('show version')
