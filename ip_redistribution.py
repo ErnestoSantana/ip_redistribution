@@ -79,9 +79,9 @@ def write_txt_ip(ip_read):
 # Connect to Router Cisco using Netmiko
 ######################################################
 
-device_typ = input('Device type <default [cisco_io]>: ')
+device_typ = input('Device type <default [cisco_ios]>: ')
 cisco = {
-    'device_type': device_typ if device_typ != '' else 'cisco_io',
+    'device_type': device_typ if device_typ != '' else 'cisco_ios',
     'host': input('Host IP: '),
     'username': input('Username: '),
     'password': input('Password: '),
@@ -89,3 +89,4 @@ cisco = {
 
 device = ConnectHandler(**cisco)
 output = device.send_command('show version')
+print(output)
